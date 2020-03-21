@@ -185,11 +185,13 @@ void sidewinder_parse_arguments(int argc, char** argv) {
 		}
 	}
 
-	if(_sidewinder_user_name[0] == '\0'){
-		strncpy(_sidewinder_user_name, getenv(SIDEWINDER_SUDO_USER_ENV_VAR), sizeof(_sidewinder_user_name));
+	char* sudo_user = getenv(SIDEWINDER_SUDO_USER_ENV_VAR);
+	if(_sidewinder_user_name[0] == '\0' && sudo_user!=NULL){
+		strncpy(_sidewinder_user_name, sudo_user, sizeof(_sidewinder_user_name));
 	}
-	if(_sidewinder_user_name[0] == '\0'){
-		strncpy(_sidewinder_user_name, getenv(SIDEWINDER_USER_ENV_VAR), sizeof(_sidewinder_user_name));
+	char* user = getenv(SIDEWINDER_USER_ENV_VAR);
+	if(_sidewinder_user_name[0] == '\0' && user!=NULL){
+		strncpy(_sidewinder_user_name, user, sizeof(_sidewinder_user_name));
 	}
 	if(_sidewinder_user_name[0] == '\0'){
 		strncpy(_sidewinder_user_name, SIDEWINDER_FALLBACK_USER, sizeof(_sidewinder_user_name));
